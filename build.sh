@@ -1,0 +1,12 @@
+./configure --with-features=huge \
+  --enable-multibyte \
+  --enable-pythoninterp=yes \
+  --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu/ \
+  --enable-python3interp=yes\
+  --with-python3-config-dir=/usr/lib/python3.6/config-3.6m-x86_64-linux-gnu/ \
+  --prefix=/home/vikgna/local \
+  --with-x \
+  --enable-fontset \
+  --disable-netbeans \
+  --with-compiledby="vikki" \
+  --enable-fail-if-missing
