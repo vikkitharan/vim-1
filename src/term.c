@@ -6026,6 +6026,11 @@ check_termcode(
 #ifdef FEAT_TERMRESPONSE
     LOG_TR(("normal character"));
 #endif
+//PATCH_RAVI_START
+//Temp fix
+    if( mouse_col < 0 )
+      mouse_col += 256 ;
+//END
 
     return 0;			    /* no match found */
 }

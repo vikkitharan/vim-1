@@ -2315,6 +2315,9 @@ do_mouse(
     int		old_active = VIsual_active;
     int		old_mode = VIsual_mode;
     int		regname;
+//PATCH_RAVI_START
+    int		i;
+//END
 
 #if defined(FEAT_FOLDING)
     save_cursor = curwin->w_cursor;
@@ -2590,7 +2593,23 @@ do_mouse(
 		{
 		    /* Go to specified tab page, or next one if not clicking
 		     * on a label. */
-		    goto_tabpage(c1);
+//PATCH_RAVI_START
+		    i = mouse_col ;
+		    while(i)
+		    {
+			if (TabPageIdxs[i] == 0 )
+			    break ;
+			i-- ;
+		    }
+
+
+		    if( i == 0 )
+			goto_tabpage(c1);
+		    else
+		    {
+			do_buffer( DOBUF_GOTO, DOBUF_FIRST, FORWARD, c1, 0 ) ;
+		    }
+//END
 
 		    /* It's like clicking on the status line of a window. */
 		    if (curwin != old_curwin)
@@ -2608,8 +2627,12 @@ do_mouse(
 		    tp = find_tabpage(-c1);
 		if (tp == curtab)
 		{
-		    if (first_tabpage->tp_next != NULL)
-			tabpage_close(FALSE);
+		  if (first_tabpage->tp_next != NULL)
+		    tabpage_close(FALSE);
+//PATCH_RAVI_START
+		  else
+		    do_buffer( DOBUF_DEL, DOBUF_CURRENT, FORWARD, 0, 0);
+//END
 		}
 		else if (tp != NULL)
 		    tabpage_close_other(tp, FALSE);
